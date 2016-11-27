@@ -22,7 +22,7 @@ namespace kmgr.fieldgame.Producers
             }
         }
 
-        public ProducerState ProducerState
+        public ProducerStateEnum ProducerState
         {
             get { return producerState; }
             set
@@ -48,9 +48,23 @@ namespace kmgr.fieldgame.Producers
             }
         }
 
+        public float ProductionValue
+        {
+            get { return productionValue; }
+            set
+            {
+                if (value != productionValue)
+                {
+                    productionValue = value;
+                    Notify(() => ProductionValue);
+                }
+            }
+        }
+
         [SerializeField] private float progress;
-        [SerializeField] private ProducerState producerState;
+        [SerializeField] private ProducerStateEnum producerState;
         [SerializeField] private float productionSpeed = 0.2f;
+        [SerializeField] private float productionValue = 100f;
 
         private float lastProductionTick;
 
@@ -60,19 +74,27 @@ namespace kmgr.fieldgame.Producers
 
             if (Progress >= 1)
             {
-                ProducerState = ProducerState.WaitingForCollection;
+                ProducerState = ProducerStateEnum.WaitingForCollection;
             }
         }
 
         protected virtual void Update()
         {
-            if (ProducerState == ProducerState.Producing)
+            if (ProducerState == ProducerStateEnum.Producing)
             {
                 if (lastProductionTick + Constants.STEP_INTERVAL <= Time.time)
                 {
                     lastProductionTick = Time.time;
                     OnProductionTick();
                 }
+            }            
+        }
+
+        private void OnMouseDown()
+        {
+            if (ProducerState == ProducerStateEnum.WaitingForCollection)
+            {
+
             }
         }
     }

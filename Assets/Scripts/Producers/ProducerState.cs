@@ -1,4 +1,12 @@
-﻿namespace kmgr.fieldgame.Producers
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace kmgr.fieldgame.Assets.Scripts.Producers
 {
-    public enum ProducerState { Idling, Producing, WaitingForCollection };
+    public interface IProducerState
+    {
+        void Update();
+    }
 }

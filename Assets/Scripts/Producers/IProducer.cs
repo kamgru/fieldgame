@@ -10,6 +10,7 @@ namespace kmgr.fieldgame.Producers
     {
         float Progress { get; set; }
         float ProductionSpeed { get; set; }
-        ProducerState ProducerState { get; set; }
+        float ProductionValue { get; set; }
+        ProducerStateEnum ProducerState { get; set; }
     }
 }
