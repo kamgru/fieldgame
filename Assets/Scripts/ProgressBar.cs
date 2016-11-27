@@ -19,7 +19,7 @@ namespace Assets.Scripts
         [SerializeField] MonoBehaviour dataContext;
         [SerializeField] string propertyName;
 
-        public virtual float ProgressValue
+        public float ProgressValue
         {
             get { return progressValue; }
             set { SetProgressValue(progressValue); }
