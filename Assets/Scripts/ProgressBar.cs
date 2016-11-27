@@ -22,7 +22,7 @@ namespace Assets.Scripts
         public float ProgressValue
         {
             get { return progressValue; }
-            set { SetProgressValue(progressValue); }
+            set { SetProgressValue(value); }
         }
 
         protected override void Start()
@@ -56,8 +56,15 @@ namespace Assets.Scripts
 
         private void SetProgressValue(float progressValue)
         {
-            progressValue = Mathf.Clamp(progressValue, 0f, 1f);
-            fillRect.anchorMax = new Vector2(progressValue, 1);
+            if (progressValue > 1 || progressValue < 0)
+            {
+                throw new ArgumentOutOfRangeException("ProgressValue");
+            }
+
+            if (fillRect != null)
+            {
+                fillRect.anchorMax = new Vector2(progressValue, 1);
+            }
         }
 
         private void UpdatePosition()
