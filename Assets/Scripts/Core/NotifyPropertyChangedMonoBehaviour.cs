@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Text;
 using UnityEngine;
 
-namespace Assets.Scripts
+namespace kmgr.fieldgame.Core
 {
     public class NotifyPropertyChangedMonoBehaviour : MonoBehaviour, INotifyPropertyChanged
     {

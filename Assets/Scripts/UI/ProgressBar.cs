@@ -32,11 +32,11 @@ namespace Assets.Scripts
             var source = dataContext as INotifyPropertyChanged;
             if (source != null)
             {
-                source.PropertyChanged += dataContextPropertyChanged;
+                source.PropertyChanged += DataContextPropertyChanged;
             }
         }
 
-        private void dataContextPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void DataContextPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == propertyName)
             {
