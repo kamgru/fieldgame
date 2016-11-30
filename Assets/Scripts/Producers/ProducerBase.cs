@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Assets.Scripts;
+using fieldgame.Contracts;
+using fieldgame.Core;
 using kmgr.fieldgame.Core;
 using UnityEngine;
 
 namespace kmgr.fieldgame.Producers
 {
-    public class ProducerBase : NotifyPropertyChangedMonoBehaviour, IProducer
+    public class ProducerBase : NotifyPropertyChangedMonoBehaviour
     {
         public float Progress
         {
-            get { return progress; }
+            get { return producer.CurrentProgress; }
             set
             {
                 if (value != progress)
@@ -22,80 +25,49 @@ namespace kmgr.fieldgame.Producers
             }
         }
 
-        public ProducerStateEnum ProducerState
-        {
-            get { return producerState; }
-            set
-            {
-                if (value != producerState)
-                {
-                    producerState = value;
-                    Notify(() => ProducerState);
-                }
-            }
-        }
-
-        public float ProductionSpeed
-        {
-            get { return productionSpeed; }
-            set
-            {
-                if (value != productionSpeed)
-                {
-                    productionSpeed = value;
-                    Notify(() => ProductionSpeed);
-                }
-            }
-        }
-
-        public float ProductionValue
-        {
-            get { return productionValue; }
-            set
-            {
-                if (value != productionValue)
-                {
-                    productionValue = value;
-                    Notify(() => ProductionValue);
-                }
-            }
-        }
-
         [SerializeField] private float progress;
-        [SerializeField] private ProducerStateEnum producerState;
-        [SerializeField] private float productionSpeed = 0.2f;
+        [SerializeField] private float productionSpeed = 0.01f;
         [SerializeField] private float productionValue = 100f;
 
         private float lastProductionTick;
+        private Producer producer;
+        private IProducerStateMachine fsm;
 
+        protected void Start()
+        {
+            producer = new Producer
+            {
+                CurrentProgress = 0f,
+                ProductionValue = productionValue,
+                TickValue = productionSpeed
+            };
+
+            fsm = new ProducerStateMachine();
+
+            fsm.Register(new IdlingState(fsm));
+            fsm.Register(new ProducingState(fsm, producer));
+            fsm.Register(new WaitingForCollectionState(fsm, FindObjectOfType<PlayerWallet>(), producer));
+
+            fsm.ChangeState<IdlingState>();
+        }
         protected virtual void OnProductionTick()
         {
-            Progress += ProductionSpeed;
-
-            if (Progress >= 1)
-            {
-                ProducerState = ProducerStateEnum.WaitingForCollection;
-            }
+            fsm.CurrentState.OnTick();
         }
 
         protected virtual void Update()
-        {
-            if (ProducerState == ProducerStateEnum.Producing)
+        {            
+            if (lastProductionTick + Constants.STEP_INTERVAL <= Time.time)
             {
-                if (lastProductionTick + Constants.STEP_INTERVAL <= Time.time)
-                {
-                    lastProductionTick = Time.time;
-                    OnProductionTick();
-                }
+                lastProductionTick = Time.time;
+                OnProductionTick();
+                Progress = producer.CurrentProgress;
             }            
         }
 
         private void OnMouseDown()
         {
-            if (ProducerState == ProducerStateEnum.WaitingForCollection)
-            {
-
-            }
+            fsm.CurrentState.OnMouseDown();
         }
     }
 }

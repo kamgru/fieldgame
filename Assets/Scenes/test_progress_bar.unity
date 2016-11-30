@@ -140,12 +140,12 @@ Prefab:
     - target: {fileID: 224000013147470410, guid: 7f7255e22d2a2e24d898d6927b726a3a,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 32.635345
+      value: 37.63214
       objectReference: {fileID: 0}
     - target: {fileID: 224000013147470410, guid: 7f7255e22d2a2e24d898d6927b726a3a,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 26.837006
+      value: 30.948212
       objectReference: {fileID: 0}
     - target: {fileID: 224000013147470410, guid: 7f7255e22d2a2e24d898d6927b726a3a,
         type: 2}
@@ -374,6 +374,7 @@ GameObject:
   - 4: {fileID: 999590297}
   - 212: {fileID: 999590296}
   - 114: {fileID: 999590295}
+  - 61: {fileID: 999590298}
   m_Layer: 0
   m_Name: GoldMine
   m_TagString: Untagged
@@ -392,7 +393,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c29ceeb2766b0c48ac71429f0f29423, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  progress: 0
   producerState: 1
+  productionSpeed: 0.02
+  productionValue: 100
 --- !u!212 &999590296
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -440,6 +444,20 @@ Transform:
   - {fileID: 1052224605}
   m_Father: {fileID: 0}
   m_RootOrder: 4
+--- !u!61 &999590298
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 999590294}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 0.64, y: 0.64}
 --- !u!1 &1052224604
 GameObject:
   m_ObjectHideFlags: 0

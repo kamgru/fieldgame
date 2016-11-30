@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace kmgr.fieldgame.Assets.Scripts.Producers
+namespace fieldgame.Contracts
 {
     public interface IProducerState
     {
-        void Update();
+        void OnTick();
+        void OnMouseDown();
     }
 }

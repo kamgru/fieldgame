@@ -2,22 +2,24 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
+using fieldgame.Contracts;
+using System;
 
-namespace Assets.Scripts
+namespace kmgr.fieldgame
 {
-    public class PlayerWallet : MonoBehaviour
+    public class PlayerWallet : MonoBehaviour, IPlayerInventory
     {
         [SerializeField]
         private Text goldTextControl;
 
-        private int gold;
+        private float gold;
 
         private void Start()
         {
             Assert.IsNotNull(goldTextControl);
         }
 
-        public void AddGold(int amount)
+        public void EarnGold(float amount)
         {
             gold += amount;
             UpdateText();
@@ -34,5 +36,9 @@ namespace Assets.Scripts
             goldTextControl.text = gold.ToString();
         }
 
+        public bool SpendGold(float amount)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
