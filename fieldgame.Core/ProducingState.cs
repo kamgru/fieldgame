@@ -15,7 +15,10 @@ namespace fieldgame.Core
         {
             this.owner = owner;
             this.producer = producer;
+            this.Name = "Producing";
         }
+
+        public string Name { get; private set; }
 
         public void OnMouseDown() { }
 

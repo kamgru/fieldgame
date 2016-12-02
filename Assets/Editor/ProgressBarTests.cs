@@ -2,7 +2,7 @@
 using UnityEditor;
 using NUnit.Framework;
 using System;
-using Assets.Scripts;
+using kmgr.fieldgame.UI;
 
 public class ProgressBarTests
 {

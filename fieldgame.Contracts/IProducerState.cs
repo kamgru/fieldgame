@@ -7,6 +7,7 @@ namespace fieldgame.Contracts
 {
     public interface IProducerState
     {
+        string Name { get; }
         void OnTick();
         void OnMouseDown();
     }

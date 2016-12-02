@@ -46,5 +46,33 @@ namespace fieldgame.Tests
             fsm.ChangeState<StateDummy>();
             Assert.IsTrue(fsm.CurrentState == state);
         }
+
+        [TestMethod]
+        public void ShouldRaiseStateChangedEvent()
+        {
+            var state = new StateDummy();
+            var fsm = new ProducerStateMachine();
+            bool wasRaised = false;
+            fsm.StateChanged += (sender, args) => { wasRaised = true; };
+            fsm.Register(state);
+
+            fsm.ChangeState<StateDummy>();
+
+            Assert.IsTrue(wasRaised);
+        }
+
+        [TestMethod]
+        public void EventArgsShouldHoldNewStateName()
+        {
+            var state = new StateDummy();
+            var fsm = new ProducerStateMachine();
+            string stateName = string.Empty;
+
+            fsm.Register(state);
+            fsm.StateChanged += (sender, args) => { stateName = args.CurrentStateName; };
+            fsm.ChangeState<StateDummy>();
+
+            Assert.IsTrue(stateName == state.Name);
+        }
     }
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Assets.Scripts;
 using fieldgame.Contracts;
 using fieldgame.Core;
 using kmgr.fieldgame.Core;
@@ -25,6 +24,14 @@ namespace kmgr.fieldgame.Producers
             }
         }
 
+        public string CurrentStateName
+        {
+            get
+            {
+                return currentStateName;
+            }
+        }
+
         [SerializeField] private float progress;
         [SerializeField] private float productionSpeed = 0.01f;
         [SerializeField] private float productionValue = 100f;
@@ -32,6 +39,7 @@ namespace kmgr.fieldgame.Producers
         private float lastProductionTick;
         private Producer producer;
         private IProducerStateMachine stateMachine;
+        private string currentStateName;
 
         protected void Start()
         {
@@ -47,9 +55,16 @@ namespace kmgr.fieldgame.Producers
             stateMachine.Register(new IdlingState(stateMachine));
             stateMachine.Register(new ProducingState(stateMachine, producer));
             stateMachine.Register(new WaitingForCollectionState(stateMachine, FindObjectOfType<PlayerWallet>(), producer));
-
+            stateMachine.StateChanged += OnStateChanged;
             stateMachine.ChangeState<IdlingState>();
         }
+
+        private void OnStateChanged(object sender, ProducerStateEventArgs e)
+        {
+            currentStateName = stateMachine.CurrentState.Name;
+            Notify(() => CurrentStateName);
+        }
+
         protected virtual void OnProductionTick()
         {
             stateMachine.CurrentState.OnTick();

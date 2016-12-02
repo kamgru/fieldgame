@@ -79,6 +79,7 @@
     <Compile Include="Assets\Scripts\Producers\GoldMine.cs" />
     <Compile Include="Assets\Scripts\Producers\IProducerState.cs" />
     <Compile Include="Assets\Scripts\Producers\ProducerBase.cs" />
+    <Compile Include="Assets\Scripts\Producers\ProducerGuiView.cs" />
     <Compile Include="Assets\Scripts\Producers\ProducerStateEnum.cs" />
     <Compile Include="Assets\Scripts\UI\ProgressBar.cs" />
   </ItemGroup>

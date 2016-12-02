@@ -12,6 +12,8 @@ namespace fieldgame.Tests.Mocks
 
         public IProducerState CurrentState { get; private set; }
 
+        public event EventHandler<ProducerStateEventArgs> StateChanged;
+
         public void ChangeState<TProducerState>() where TProducerState : IProducerState
         {
             CurrentState = states.FirstOrDefault(state => state.GetType() == typeof(TProducerState));

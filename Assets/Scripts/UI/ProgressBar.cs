@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using kmgr.fieldgame.Core;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Assets.Scripts
+namespace kmgr.fieldgame.UI
 {
     [ExecuteInEditMode]
     public class ProgressBar : UIBehaviour
@@ -16,7 +17,7 @@ namespace Assets.Scripts
         [SerializeField] float progressValue;
         [SerializeField] RectTransform fillRect;
         [SerializeField] Transform followTransform;
-        [SerializeField] MonoBehaviour dataContext;
+        [SerializeField] NotifyPropertyChangedMonoBehaviour dataContext;
         [SerializeField] string propertyName;
 
         public float ProgressValue
@@ -27,13 +28,8 @@ namespace Assets.Scripts
 
         protected override void Start()
         {
-            base.Start();
-
-            var source = dataContext as INotifyPropertyChanged;
-            if (source != null)
-            {
-                source.PropertyChanged += DataContextPropertyChanged;
-            }
+            Assert.IsNotNull(dataContext);
+            dataContext.PropertyChanged += DataContextPropertyChanged;            
         }
 
         private void DataContextPropertyChanged(object sender, PropertyChangedEventArgs e)

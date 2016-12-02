@@ -17,7 +17,10 @@ namespace fieldgame.Core
             this.owner = owner;
             this.playerInventory = playerInventory;
             this.producer = producer;
+            this.Name = "WaitingForCollection";
         }
+
+        public string Name { get; private set; }
 
         public void OnMouseDown()
         {

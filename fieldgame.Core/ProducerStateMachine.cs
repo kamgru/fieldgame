@@ -17,6 +17,8 @@ namespace fieldgame.Core
 
         public IProducerState CurrentState { get; private set; }
 
+        public event EventHandler<ProducerStateEventArgs> StateChanged;
+
         public void ChangeState<TProducerState>() where TProducerState : IProducerState
         {
             if (!states.ContainsKey(typeof(TProducerState)))
@@ -25,6 +27,7 @@ namespace fieldgame.Core
             }
 
             CurrentState = states[typeof(TProducerState)];
+            RaiseStateChanged();
         }
 
         public IEnumerable<IProducerState> GetStates()
@@ -39,6 +42,15 @@ namespace fieldgame.Core
                 throw new ArgumentNullException("State");
             }
             states.Add(typeof(TProducerState), state);
+        }
+
+        private void RaiseStateChanged()
+        {
+            var temp = StateChanged;
+            if (temp != null)
+            {
+                temp(this, new ProducerStateEventArgs(CurrentState.Name));
+            }
         }
     }
 }

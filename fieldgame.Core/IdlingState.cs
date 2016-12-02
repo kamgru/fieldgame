@@ -13,7 +13,10 @@ namespace fieldgame.Core
         public IdlingState(IProducerStateMachine owner)
         {
             this.owner = owner;
+            this.Name = "Idling";
         }
+
+        public string Name { get; private set; }
 
         public void OnMouseDown()
         {

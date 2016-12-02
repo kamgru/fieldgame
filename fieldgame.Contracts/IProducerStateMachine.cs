@@ -11,5 +11,6 @@ namespace fieldgame.Contracts
         void ChangeState<TProducerState>() where TProducerState : IProducerState;
         void Register<TProducerState>(TProducerState state) where TProducerState : IProducerState;
         IEnumerable<IProducerState> GetStates();
+        event EventHandler<ProducerStateEventArgs> StateChanged;
     }
 }
