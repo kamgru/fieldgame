@@ -31,7 +31,7 @@ namespace kmgr.fieldgame.Producers
 
         private float lastProductionTick;
         private Producer producer;
-        private IProducerStateMachine fsm;
+        private IProducerStateMachine stateMachine;
 
         protected void Start()
         {
@@ -42,17 +42,17 @@ namespace kmgr.fieldgame.Producers
                 TickValue = productionSpeed
             };
 
-            fsm = new ProducerStateMachine();
+            stateMachine = new ProducerStateMachine();
 
-            fsm.Register(new IdlingState(fsm));
-            fsm.Register(new ProducingState(fsm, producer));
-            fsm.Register(new WaitingForCollectionState(fsm, FindObjectOfType<PlayerWallet>(), producer));
+            stateMachine.Register(new IdlingState(stateMachine));
+            stateMachine.Register(new ProducingState(stateMachine, producer));
+            stateMachine.Register(new WaitingForCollectionState(stateMachine, FindObjectOfType<PlayerWallet>(), producer));
 
-            fsm.ChangeState<IdlingState>();
+            stateMachine.ChangeState<IdlingState>();
         }
         protected virtual void OnProductionTick()
         {
-            fsm.CurrentState.OnTick();
+            stateMachine.CurrentState.OnTick();
         }
 
         protected virtual void Update()
@@ -67,7 +67,7 @@ namespace kmgr.fieldgame.Producers
 
         private void OnMouseDown()
         {
-            fsm.CurrentState.OnMouseDown();
+            stateMachine.CurrentState.OnMouseDown();
         }
     }
 }
